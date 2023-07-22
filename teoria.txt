@@ -47,6 +47,42 @@ En nodeJS no tenemos el objeto window, es un método del navegador, el objeto wi
 
 Podemos usar en node el console.log(), porque sale del globalThis, osea todo lo que nosotros tenemos en global es lo que podemos usar, console.log es una variable del globalThis, como Promise, fetch etc etc. Muchas de las cosas que salen de la nada salen de la variable globalThis todo.
 
+En nodeJS nunca vamos a tener todo en un mismo fichero, lo que vamos a querer e intentar es separar en diff ficheros, para ellos vamos a usar un patron de diseño Modulo.
+Este patrón en el vamos a hacer es separar nuestro código en diff ficheros y los vamos a poder importar y exportar para que ese código se reutilice así organizaremos nuestro código mejor y evitaremos repetirlo.
+
+El sistema clasico de modulos de nodeJS es CommonJS, forma clasica y antigua.
+// sum.js
+function sum(a, b) {
+  return a + b
+}
+
+module.exports = sum => forma no nombrada puede importarse con cualquier nombre.
+module.exports = {
+    sum forma nombrada con esto obligamos que donde importamos la función sea exactamente con el mismo nombre que tiene la función.
+}
+
+// importación
+const sum = require('./sum') => cuando exportamos no nombrado.
+const { sum } = require('./sum') => cuando exportamos nombrado.
+
+LA extension de los archivos en node puede variar en algunas ocaciones ejm 
+file.js => .js utiliza CommonJS por defecto.
+file.mjs => .mjs utiliza ES modules
+file.cjs => forzado a usar CommonJS
+
+Nonde a evolcionado y por suerte teemos otra forma de importar y exportar modulos, que es en base a ES modules ejm 
+
+// export 
+export function sum(a, b) {
+  return a + b
+}
+
+// import 
+import { sum } from './sum.mjs'
+Esta es la forma moderna y más recomendaba en la especificacion official de js, aparte de tener las vetajas de ser moderna.
+
+
+
 
 
 
