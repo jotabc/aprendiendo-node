@@ -90,8 +90,7 @@ const os = require('node:os')
 
 En ES modules las extensiones son necearias, siempre aunque con webpack y otros empaquetadores de clente hacen que no sea necesario la extension, la especificación de ES module es obligatorio usar las extensiones, en CommonJS no es necesario porque como webpack ya lo quita por nosotros.
 
-
-
+La lectura y escrita node no hace en el proceso principal en el hilo principal lo saca fuera.
 
 
 
