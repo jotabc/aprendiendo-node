@@ -1,0 +1,54 @@
+!!! NODE JS !!!.- Node no es un lenguaje de programación, framework etc, es literalmente un entorno de ejecución de JS sin ser un navegador, es decir, sencillamente un sitio donde podemos ejecutar JS un lugar donde podemos ejecutar js sin ningun problema, esto significa que podemos crear un montón de diff tipos de apps con js en backend, terminales y dispositivos.
+
+Es de código abierto, es multiplataforma mascOS, windows etc, es asíncrono, in put de datos, su arquitectura está orientada a eventos.
+
+El secreto de node es que usa motor V8, es el motor de JS que utiliza el navegador chrome, chrome ejecuta js mucho más rápido, node apreovecha ese motor para ejecutar JS.
+
+¿Que significa que sea orientado eventos?.- Es un modelo de programación que basicamente tiene un bucle que va manejando las solicitudes que le van llegando cada vez que tiene un evento, en lugar de esperar bloqueos, el va ejecutando tareas mientras espera respuestas d otras tareas que ha dejado por ahí, pero esto lo maneja en un solo thred, es decir, nodeJS es monohilo , pero tiene un sistema que hace es que livera ese proceso para poder hacer cosas en asíncrono, osea nodeJS aprovecha la sincronía y espera eventos lo que hace es simular que hace más de una cosa a la vez pero no lo hace solo hace una cosa a la vez, lo que pasa es que gracias a estar basado en eventos, va esperando que ocurra cosas, para decir voy a aparcare aquí y voy ha seguir con esto pero cuando llegue lo que deje ahí retorno con eso.
+
+¿Porque aprenderlo?.- 
+- Demanda del mercado. Linkedin, GoDaddy, Netflix, Paypal, Uber etc etc muchas empresas o casi todas usa node. Un montón de cosas usan nodeJS.
+
+- Se puede usar todos los concocimientos de JS en node orientado al backend.
+- Podemos crear app webs, apis, servicios son complejidades, scrapping, utilidades, no se limita en nada.
+- Comunidad inmensa y un ecosistema todavía más grande.
+- NodeJS es rápido, escalable y muy fácil de desplegar.
+
+!INSTALACIÓN y ADMINISTRACIÓN DE VERSIONES!.-
+- Podemos hacerl manual, es la pagina oficial de node podemos nosotros descaragar el instalador dependiendo el SO que tengamos. Es la más sencilla, pero la desventaja es que esta te instalará una sola versión de node, y si queremos usar una versión de node distinta en otros projectos no podremos usarla.
+
+- Las más recomendado es usar un administrador de verison de node (NVM el más conocido), nos permite tener e instalar más de una versión y cambiar la versión a la vez.
+
+
+- Tenemos otro buen administrador fnm pero este debemos de tener instalado RUST.
+    - instalamos rust => curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    - instalamos fnm => 
+  Al tener instalado todo tenemos acceso a los comandos que nos ofrece por terminal ejm:
+  - fnm list => nos muestra una lista de todas las versiones de node que tenemos en nuestro sistema y nos muestra la que tenemos por default.
+
+  - fnm install node_version (18.17.0) => aqui instalamos node con la version que nosotros queremos.
+  - fnm use node_version => Con este le decimos que version de node queremos que use en ese momento, sea en un proyecto o en nuestra computadora.
+
+  - fnm alias node_version default => en cambio con este comando le decimos que por defecto use esa version de node. Siempre será esa version que use.
+
+  - node -v => con esto vemos la versión de node que estamos usando actualemnte(x seguridad verificamos).
+
+Node nos provee un repl (read eval print loop), ed decir podemos nosotros escrbir JS como en la consola de chrome pero en la terminal, lo que hace es leer, evaluar, imprimir lo que nosotros de decimos por la terminal en un loop osea va a estar constantemente haciendo eso como lo logramos lanznado en nuestra terminal node.
+
+your terminal => node
+Este nos abrira un repl en la terminal y podemos escirbir lo que deseemos JS obviamente.
+const a = 'Hola mundo' (enter)
+console.log(a)
+
+El canal de output de node es la terminal, sería la forma de comunicarnos.
+En nodeJS no tenemos el objeto window, es un método del navegador, el objeto window global no existe en nodeJS, por suerte una cosa interesante que ahora es nueva en JS, tenemos un objeto global para todos los entornos globalThis es la variale global tanto del servidor como el cliente.
+
+!globalThis!.- Es una variable global en toda nuestra app, podemos acceder a ella no importa donde estemos siempre tendremos acceso a esta variable. En el navegador globalThis apunta a window por eso es que en el navegador window es el objeto gloabl, y en node globalThis apunta a global variable global de node, como buena práctica usaremos globalThis en node.
+
+Podemos usar en node el console.log(), porque sale del globalThis, osea todo lo que nosotros tenemos en global es lo que podemos usar, console.log es una variable del globalThis, como Promise, fetch etc etc. Muchas de las cosas que salen de la nada salen de la variable globalThis todo.
+
+
+
+
+
+
