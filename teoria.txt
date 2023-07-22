@@ -81,6 +81,15 @@ export function sum(a, b) {
 import { sum } from './sum.mjs'
 Esta es la forma moderna y más recomendaba en la especificacion official de js, aparte de tener las vetajas de ser moderna.
 
+! MODULO NATIVOS !.- NodeJS no trata solo de crear funciones importarlas y exportarlas, nodeJS al ser un entorno de ejecución es que nos da una biblioteca enorme de modulos nativos que nos da acceso al sistema de archivos, SO, intenet, lo podemos hacer aquí.
+
+Modulos nativos
+- os.- En versiones anteriores de node teniamos que requerir de esta forma los modulos nativos, desde la versión 16 de node ya nos es recomendable usar el nombre del módulo directo, si no ahora colocarle el prefijo node:name_module
+
+const os = require('node:os')
+
+En ES modules las extensiones son necearias, siempre aunque con webpack y otros empaquetadores de clente hacen que no sea necesario la extension, la especificación de ES module es obligatorio usar las extensiones, en CommonJS no es necesario porque como webpack ya lo quita por nosotros.
+
 
 
 
