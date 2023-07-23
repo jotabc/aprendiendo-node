@@ -92,6 +92,22 @@ En ES modules las extensiones son necearias, siempre aunque con webpack y otros 
 
 La lectura y escrita node no hace en el proceso principal en el hilo principal lo saca fuera.
 
+!PATH!.- Nos permite saber el path de los archivos que tenemos, con el path podemos construir nuevas rutas de archivos, saber si un archivo tiene una extension, recuperar una extension crear rutas absolutas, podemos unir rutas también.
+Es una mala práctica crear rutas a mano en node siempre por el Sistema Operativo porque, porque las barras son diff en los sistemas operarivos, lo más recomendado es usar e path ejm
+Unix es asi /
+windows es asi \
+con este comando podemos ver la separacion de las rutas en el SO, osea las barras
+console.log(path.step)
+Un error muy común en nodeJS es olvidarnos de los SO que podemos llegar a usar.
+
+! PROCESS!.-El objeto process, este process es muy importante en node es un objeto global que proporcia la información y control sobre le proceso actual de ejecución, tiene propiedades y métodos que nos permite interactuar con el entorno de ejecución de nodeJS y nos da información relacionada con el proceso actual, como x ejm los argumentos de entrada a la hora de ejecutar nuestro proceso ejm console.log(process.argv)
+
+Esto sería los argumentos que va a recibir en la linea de comandos por ejm 
+node index.js argumento1 argumento2 etc
+Nos devuelve un array con lo sig:
+1) Binario recibido, es decir todo el path absoluto
+2) archivo ruta con nombre del archivo.
+3) Todos los argumentos que le pasamos en a terminal.
 
 
 
