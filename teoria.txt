@@ -109,6 +109,24 @@ Nos devuelve un array con lo sig:
 2) archivo ruta con nombre del archivo.
 3) Todos los argumentos que le pasamos en a terminal.
 
+!NPM!.- es un administrador de paquetes de node, salió un poco despúes de node, es el registro de paquetes más grande de código que existe, no hay ningún tipo de sistema de ningún otro lenguaje de programación o entorno de ejecución más grande que el de nodeJS, es un registro paquetes de código abierto que cualuiera puede usar de forma gratuita como React x ejm, npm es un registro público, pero npm también es una línea de comandos como npm --version.
+Osea podemos usar yarn o pnpm con todos los paquetes que tiene npm.
 
+Para iniciar un proyecto con node debemos de usar el sig comando:
+  - npm || pnpm || yarn init -y.- Esto nos crea un package.json que sería un desxripción en JSON de nuestro proyecto, como título, autor, version scripts etc.
+
+Podemos usar una dependencia una dependencia picocolors para dar un poco de vida a nuestra terminal => pnpm add picocolors
+
+
+// semantic versioning 2.1.0
+
+2 => Major cuando se rompe la compatibilidad hacia atrás.
+1 => Minor cuando añaden nuevas funcionalidades.
+0 => Patch cuando arreglan solo fixes.
+Debemos de tener en cuenta que cada vez que instalamos una dependencia, las dependecia que estamos instalando puede ser que tiene mas dependencias etc etc.
+
+En node tenemos dos tipos de dependecias:
+- Production.- Son dependencias que nuetsro proyecto necesita para funcionar.
+- Desarrollos.- Son importantes pero son solo de desarrolo, como linters, ts, webpack por ejm, que nos sirven para desarrollar usa siempre un -D es el comando npm i name_pack -D.
 
 

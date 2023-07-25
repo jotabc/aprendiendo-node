@@ -1,0 +1,34 @@
+{
+  "name": "aprendiendo-node",
+  "version": "1.0.0",
+  "description": "El mejor curso de node por 0$",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jotabc/aprendiendo-node.git"
+  },
+  "keywords": [
+    "curso",
+    "node",
+    "nodeJS",
+    "midudev"
+  ],
+  "author": "Miguel Ángel Durán García - midudev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jotabc/aprendiendo-node/issues"
+  },
+  "homepage": "https://github.com/jotabc/aprendiendo-node#readme",
+  "dependencies": {
+    "picocolors": "1.0.0"
+  },
+  "devDependencies": {
+    "standard": "17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
+}

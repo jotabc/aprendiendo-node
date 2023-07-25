@@ -6,8 +6,8 @@
 
 // podemos controlar eventos del proceso
 // process.on('exit', () => {
-  // limpiar recursos lo que sea
-  // escuchar errores en concreto errores no controlados que se pasan como eventos
+// limpiar recursos lo que sea
+// escuchar errores en concreto errores no controlados que se pasan como eventos
 
 // })
 
@@ -19,4 +19,3 @@ console.log(process.platform)
 
 // variables de entorno pasaod desde la terminal.
 console.log(process.env.PEPITO)
-

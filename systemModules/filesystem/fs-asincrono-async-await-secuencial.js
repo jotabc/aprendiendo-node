@@ -26,4 +26,3 @@ console.log('Leyendo el primer archvivo...')
 // console.log('Leyendo el segundo archvivo...')
 // const text2 = await fs.readFile('./archivo2.txt', 'utf-8')
 // console.log('segundo texto', text)
-  

@@ -18,4 +18,3 @@ console.log(path.sep)
 // Un muy útil es obtener la extensión del archivo.
 // const fileExtension = path.extname('tmp/jonnathan-secret/image.png')
 // console.log(fileExtension)
-

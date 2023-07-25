@@ -10,13 +10,11 @@ fs.readdir('.', (err, files) => {
   // handleError
   if (err) {
     console.error('Error al leer el directorio:', err)
-    return; // -> con esto evitamos que se ejecute nuestro code.
+    return // -> con esto evitamos que se ejecute nuestro code.
   }
 
-  //handleSuccess
+  // handleSuccess
   files.forEach(file => {
     console.log(file)
   })
-
 })
-
