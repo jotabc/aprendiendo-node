@@ -130,3 +130,6 @@ En node tenemos dos tipos de dependecias:
 - Desarrollos.- Son importantes pero son solo de desarrolo, como linters, ts, webpack por ejm, que nos sirven para desarrollar usa siempre un -D es el comando npm i name_pack -D.
 
 
+
+Los archivos .env no hacen parte de node, son de las bibliotecas que nos ayudan con node, node lo que hace es leer las variables ese es el trabajo de node.
+

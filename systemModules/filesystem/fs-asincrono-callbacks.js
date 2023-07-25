@@ -5,6 +5,7 @@ console.log('Leyendo el primer archvivo...')
 // readFile metodo para leer archivos en asincrono.
 fs.readFile('./archivo.txt', 'utf-8', (err, text) => {
   console.log(text)
+  if (err) throw new Error(err)
 })
 
 console.log('Hace cosas mientras lee el archivo...')
@@ -12,4 +13,5 @@ console.log('Hace cosas mientras lee el archivo...')
 console.log('Leyendo el segundo archvivo...')
 fs.readFile('./archivo2.txt', 'utf-8', (err, text) => {
   console.log('segundo texto', text)
+  if (err) throw new Error(err)
 })
