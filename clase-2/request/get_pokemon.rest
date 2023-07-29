@@ -1,0 +1,17 @@
+### GET POKEMONS
+GET http://localhost:1234/pokemon/ditto
+
+
+### CREATE POKEMON (POST)
+POST http://localhost:1234
+Content-Type: application/json
+
+{
+    "name": "ditto 2",
+    "type": "normal",
+    "ability": "fire",
+    "moves": [
+        "transform"
+    ]
+}
+

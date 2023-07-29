@@ -133,3 +133,152 @@ En node tenemos dos tipos de dependecias:
 
 Los archivos .env no hacen parte de node, son de las bibliotecas que nos ayudan con node, node lo que hace es leer las variables ese es el trabajo de node.
 
+Un callback son funciones que se ejecutan después de que pase algo. Normalmente cuando son cosas asincronas.
+En node cuando hacemos una petición hace siempre 2, es porque estamos haciendo una petición desde el navegador, primero hace la petición que le estamos pasando y la 2da es porque intenta sacar el favicon.
+Pero cuando hacemos peticiones a una api esta no hace doble petición porque le navegador no la necesita.
+
+! SERVIDORES !.- (req, res) => {}
+  - Http.- Es un protoclo de trasnferencia de hipertexto, es el más utilizado o uno de los más utilizado en internet para transmitir información. especialmente páginas web. Las peticiones son las request.
+  Cuando hamemos petiticiones nosotros tenemos lo sig:
+
+    -url.- Tenemos la url a donde nosotros estamos haciendo la petición.
+
+    -headers.- Son cabeceras, normalemnte es información que va pegada a la petición como para darle más contexto a la petición, es decir le mandamos más información, x ejm, envio de cookies, tokens, tipos de datos esperados.
+
+    -method.- Que tipo de petición tenemos GET POST etc.
+    -body.- Este es el cuerpo de la petición, es donde van todos los datos que queremos transmitir
+
+  Todo esto llega a nuestro server, cuando le llega la petición, espera un momento hasta que procese toda la información, puede ir a DB x ejm, una vex que tiene lo que hace es devolver una response.
+
+  Las respuestas traen lo sig:
+    - statusCode.- El estado de que ha ido bien, regular o mal.
+    - headers.- Headers de respuesta
+    - body.- Donde envia la información que proceso en la petición, la información que pedimos.
+  Primero le decimos el statusCode luego las cabeceras que puede tener. El statusCode está separado de las cabeceras.
+
+  Una cabecera de respuesta tiene una cosa importante también el UserAgent, es una cabecera que se pone para decir x ejm quien es el que hizo la petición quien es el usuario, nos ayuda en el servidor a poder tratar este dato x ejm, si es un movil pues le envio ménos información o temas de analiticas. Con esto podemos ver que clientes están usando nuestro servicio.
+
+El protoclo http siempre ha tenido problemas de seguridad de forma historica, por eso tenemos también https.
+Para crear APIs lo primero que nosotros debemos de tener en cuenta es discriminar las url, osea tener diff url que respondan algo.
+
+Podemos nosotros tener un feedback en node automatico, es decir, evitar que después de cada cambio tener que reiniciar el servidor a mano para ver reflejado los cambios para esto tenemos 2 opciones:
+
+  - --watch.- este flag nos ayuda a que el servidor siempre este a la escucha de lo que hagamos y refleje los cambios de forma automatica ejm, aunque esta experimental en versiones de node, en la 20 creo que ya no esta experimental.
+    - node --watch inde.js
+    - mediante scripts de node. "dev": "- node --watch inde.js"
+
+  - nodemon.- Mediante una librería externa llamada nodemon, funciona igual al watch ejm
+    - instalacion pnpm add nodemon -D (dependencia de desarrollo)
+    - "dev": "nodemon index.js"
+
+Cuando nosotros creamos SPA, normalmente tenemos errores al cargar las rutas cuando servimos nuestro app esto se da porque
+
+  - no tenemos servidor.- Esto es porque nosotros nos tenemos un servidor levantado que verifique a que riuta se llamo y el contenido que debe devolver.
+
+  Al no tener un servidor detrás, por lo tanto lo que debemos hacer es servir un mismo fichero independientemente de la ruta, para solucionarlo, como no sabemos responder a las rutas cuando no tenemos servidor, normalemnte depende del hosting, pero lo que debemos de hacer es que todas la rutas vayan siempre al indice, para que cargue el sj, y sea el js el que hace el procesado de las rutas.
+
+- STATUS CODE- tenemos:
+
+  - 100-199 .- Respuesta informativas.
+  - 200-299 .- Respuesta satisfactorias.
+  - 300-399 .- Redirecciones.
+  - 400-499 .- Errores de cliente. SOn errore que nosostros podemos enviar, como datos que no acepta, no tener permisos de acceso a algo.
+
+  - 500-599.- Errores del servidor 
+  statusCode completos => https://http.cat/
+
+  Más tipicos:
+   200 => ok
+   301 => Moved permanently esto significa que el recurso que había aquí se ha movido y le hemos redireccionado
+
+   400 => Bad request esto sig que la request que hemos hecho no es correcta, es decir, que la rquest esta mal formada.
+
+   404 => Not found un recurso no encontrado osea que no existe.
+   500 => Internal server error, es un error de servidor que no sabemos ni siquiera que paso del lado del servidor.
+
+   Um buffer en node es una clase global que la utilizan para trabajar con datos binarios, ejm, si nosotros leemos un archivo o una imagen, el lee un archivo los datos binarios lo guarda en un espacio de la memoria física, este espacio temporal tiene la información de forma temporalmente para poder tratarlos.
+   Los buffers son muy útiles para trabajar con archivos imagenes, criptografía, para cualquier cosa que no sean cadenas de texto, números, textos planos, o json, son esenciales a la hora de trabajar con las transiciones de datos, como se leen datos de archivos o recibirlos através de la red.
+
+  ! CABECERAS !.-  mas usados
+    res.setHeader('Content-Type', 'application/json')
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+    res.setHeader('Content-Type', 'text/html; charset=utf-8')
+    res.setHeader('Content-Type', 'image/jpg')
+    ...etc
+
+  Lo importante de las cabeceras es que nosotros le decimos el tipo de codificación que tienen los datos que le estamos enviando por ejm si enviamos una imagen, nosotros en si no enviamos la imagen tal cual, si no un binario leido por node, al nosotros enviarle la cabecera justa res.setHeader('Content-Type', 'image/jpg') el navegador sabe como procesarlo. Esto es muy importantes
+
+! TIPOS DE PETICIONES!.-
+  - GET
+  - POST
+  - PUT
+  - PATCH
+  - DELETE
+  - HEAD.- Es igual que el GET, pero con este le decimos que no hace falata que nos envie el body. Usado para un previo paso, es decir, que x ejm un usuario tenga permisos un token etc.
+
+  - OPTIONS.- Describe los recursos que se pueden hacer en ese path, muchas veces es el problema que tenemos con el CORS, es lo que hace el navegador para hacer una petición a un endpoint, le dice quiero que me indiques con esta url que quiero acceder cuales son los modos que tengo permitidos de comunicación contigo, el options es que le devuelve las cabeceras de CORS.
+
+NOTA.- let y const funcionan es por ambito de bloque y los bloques se definen entre llaves, por eso es buena práctica aunque en casos sean opcionles las llaves debemos de usar siempre para que no haya colisión de constantes o let en funciones o en este caso de routing switch.
+
+!!! EXPRESS !!!.- Express es un framework, es el más usado, de node que nos permite crear apis, app, Nextjs usa express, webpack, tiene varios años funcionando en node. Un monton de framework lanzan cabeceras propias que indican que framework está siendo usado en express es X-Powered-By: Express aunque es recomendable quitarlo.
+
+  - instalacion:
+    - pnpm add express -e
+
+  Ventajas de express: 
+    - automaticamente el detecta los content-type, de las cabeceras, en node puro teniamos que pasarle las cabeceras dependiendo el tipo de dato que enviabamos como json, images, html etc, en express no enviamos cabeceras de conten-type porque el ya lo detecta por sí solo.Obviamente cada respuesta tiene un tipo de envio es decir si nosotros queremos que devuleva un json la endpoint pues debemos de decirle el tipo x ejm
+  
+  app.get('/', (req, res) => {
+    res.json({ message: 'Test' }) // enviamos un json, el automaticamente hace el JSON.stringify, y coloca el content-type por nosotros.
+  })
+
+  - No es necesario estar discriminando las urls, es decir como vimos tenemos que ir construyendo la api mediante un switch donde verificamos si la url es tal, si el metodo es tal etc, con express lo que necesitamos es colocar el nombre del servidor que creamos, luego tipo de la solicitud, luego dentro de esto la url, y el process function, es decir la función que se va a ejecutar cuando se lance esa url ejm 
+
+  // servidor
+  const express = require('express')
+  const app = express()
+
+  // metodo
+  app.get() => el .get sería el tipo de la petición.
+
+  // url
+  app.get('/url') => dentro de la función la url como primer parámetro
+
+  // process function
+  app.get('/url', (req, res) => {
+
+  }) => dentro de la función la funcion a ejecutarse como 2do parámetro, que esta función es la que recibe la req y la res.
+
+  - Una mejor forma de construir la rutas en este caso el post.
+
+! MIDDLEWARES!.- Loa middlewares son funciones, en los middlewares podemos nosotros ahcer que pasen todas las req antes que matchee con la que le indicamos a que trate, lo que hace es que cualquier request que nosotros hacemos que pasen po ahí, procesan o hacen cualquier cosa, pueden x ejm, extraer cookies, verificar si el usuario esta logeado, extraer información de json, cualquier tipo de lógica, es algo previo al tratae la request y luego lo que hace después que se proceso el middleware lo que hace es llamar al método next para que vaya a la siguiente y continue viajando la req.
+En pocas palabras un middleware es una función que se ejecuta entre la petición y la respuesta.
+
+comunmente usado con use y va del todo arriba, osea si tenemos un archivo de api y todas vayan a products se coloca el middleware y luego el resto de rutas ejm
+
+// middleware => podemos colocar la ruta a las cuales queremos que se ejecute el middleware solo cuando entre en esas rutas en este ejm, se ejecuta el middleware siempre y cuando entre a las todas las rutas products que existan.
+Es muy importante el next porque si no colocamos pues se quedara pensando en las rutas y no devolverá la respuesta a la api que se llama muy importante.
+
+app.use('/products/*', (req, res, next) => {
+  console.log('Mi primer middleware')
+  // trackear la res a la DB.
+  // revisar si el usuario tiene cookies
+   next() ejcutamos le método para que vaya a la sig petición.
+})
+
+// si no colocamos ruta es para todas las rutas. 
+app.use((req, res, next) => {
+  console.log('Mi primer middleware')
+  // trackear la res a la DB.
+  // revisar si el usuario tiene cookies
+   next() ejcutamos le método para que vaya a la sig petición.
+})
+
+// resto de rutas 
+app.get('/products', (req, res) => {
+  ...rest of code
+})
+
+..rest of routes
+
+Con los middlewares podemos gestionar cors y servir archivos estáticos.

@@ -1,0 +1,8 @@
+{
+  "name": "ditto",
+    "type": "normal",
+    "ability": "fire",
+    "moves": [
+        "transform"
+    ]
+}
