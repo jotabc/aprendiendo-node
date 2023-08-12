@@ -282,3 +282,72 @@ app.get('/products', (req, res) => {
 ..rest of routes
 
 Con los middlewares podemos gestionar cors y servir archivos estáticos.
+
+!!! REST !!!.- (REpresentational State Tranfer)
+Es una arquitectura de software, se diseño para sistemas de comunicación en redes principalmente para app web, especialmente usado para construir APIS por lo cúal nace las REST API, REST se basa en los sig principios:
+  - Escalabilidad
+  - Simplicidad
+  - Visibilidad
+  - Portabilidad
+  - Fiabilidad
+  - Fácil de modificar
+
+Todas la arquitecturas de software responden a crear a base de unos principios la idea de crear algo que pueda sostenerse en el tiempo de la mejor forma posible y simplificar el desarrolo de esa piexa de software, todas las arquitecturas de software se basan en esto siempre.
+
+LOs fundamentos de REST son los sig:
+  - Resouces (recursos).- En una arquitectura REST, todo es considerado como un recurso, x ejm un usuario, una entidad completa, un libro, un blog, una coleccion también, lista de libros o usuarios, cada recurso se va a identificar con una URL.
+
+  - VERBOS http.- Get, post, put etc, que son los utilizads para definir las operaciones que se pueden realizar con los recursos, los recursos pueden hacer operaciones, normalmente estos verbos normalmente representan las acciones básicas de un CRUD, esto permite que las apps puedan interactiar con estos recursos.
+
+  - Representaciones.- Los recursos pueden tener muchas represntaciones, como JSON, xml, html, el cliente debería poder decidir la representación del recurso, los recursos pueden representarse en cualquier formato no debería estar atado a un en concreto, normalmente es la representación en JSON, lo importante es que de alguna forma este separada la representación del propio recurso.
+
+  - Stateless.- Significa que cada solicitud que hagamos al servidor debe contener toda la información necesaria para entender esa solicitud, es decir, que el servidor no debe mantener ningún estado sobre el cliente entre solicitudes, es muy importante esto, el servidor no puede ni necesita hacer nada que gurade información para poder enviarle al cliente, esa informacion siempre debe de ir en la url. El cliete debe enviar toda la información necesaria para procesar la request, el servidor no necesota ningún estado para procesar la request. Nuestro backend no debe de guardar información para saber como tiene que constestar esta request.
+
+  - Interfaz uniforme.- LA interfaz entre el servidor y el cliente sea uniforme, consistente para todas las interacciones. Basicamente que nuestras url tienen que hacer lo mismo, siempres se tiene que llamar igual.
+
+  - Separación de conceptos.- Los componentes del cliente y el servidor estén separados entre sí, esto permite que cliente y servidor evoluvicionen de forma separada.
+
+  Se puede crear apis que no sean rest precisamente. como x ejm GraphQL.
+  
+Cuando se crea un recurso de POST es una mala práctica coloar el ...req.body, es mejor obtener todos los datos de y validar lo que nos envían en la req.
+LAs validaciones en node podemos manejar un herramienta muy interesante, en este caso usaremos zod
+  pnpm add zod -E
+
+Podemos validar nosotros de diff maneras, validar la req en lugar del objeto de las movies, más interesante es crear el objeto(schema) de las movies.
+
+El error 400(Bad Request) nos indica que el cliente ha hecho algo mal y está bien porque esto quiere decir que el cliente no puede repetir esta request si no va a repetir el problema.
+
+El error 422(Unprocesable Entity) que nos indica que el servidor a entendido la req el tipo d contendio que todo funciona bien, pero la sintaxis del recurso que se quería crear no se podía crear por una validacón o instrucción incorrecta.
+
+Nuestras apis tienen que estar abiertas a todo le podemos pasar de todo sin que revienten y luego procesar o que necesita no podemos petar a cada rato por cada error que cometan los usuarios o le pasemos algo demás como por ejm el paso en desorden de las propiedades etc etc, pero tiene que ser exquisitas en lo que preocesan y tienen que focalizarse en lo que devuelven.
+Como vemos en el sig ejm estamos intentando una inyección SQL, no nos da error porque la API recibe de todo pero procesa lo que necesita y practicamente lo ignora.
+Con zod cuando esa propiedad del objeto no se pasa en el body el lo ignora completamente y no actuliza esa propiedad así la pasemos. 
+
+{
+    "sql": 'SELECT * movies',
+    "title": "The Godfather",
+    "year": 1975,
+    "director": "Francis Ford Coppola",
+    "duration": 175,
+    "poster": "https://img.fruugo.com/product/4/49/14441494_max.jpg",
+    "genre": [
+      "Crime",
+      "Drama"
+    ]
+}
+
+!DIFF ENTRE POST PUT Y PATCH!
+Que es la Idempotencia.- La Idempotencia es la propiedad de realizar una acción determinada varias veces y aun así conseguir siempre el mismo resultado que se obtendría al hacerlo una vez.
+Esto puede funcionar o es cuando usamos las funciones puras por ejm un función que sume 2 más dos las veces que se llamen será siempre 4.
+
+  POST                    PUT                              PATCH
+- crea un nuevo         - Actualizar totalmente           - Actualizar parcialmente
+  elemento/recurso        un elemento ya existente          un elemento/recurso
+  en el server.           o crearlo si no existe.
+
+- No es Idempotente     - Idempotente si, porque x más   - Idempotente, tal vés porque podemos
+  porque siempre crea     veces que se llame a esta api    tener un campo updatedAt y se genera no
+  un nuevo recurso        el resultado siempre será el     el mismo recurso. como puede pasar en el PUT.
+                          mismo.
+
+  /movies                   /movies/123                     /movies/123
