@@ -2,11 +2,35 @@ const express = require('express')
 const crypto = require('node:crypto')
 const movies = require('./movies.json')
 const { validateMovie, validatePartialMovie } = require('./schemas/movies')
+const cors = require('cors')
 
 const app = express()
+app.use(cors({
+  origin: (origin, callback) => {
+    const ACCEPTED_ORIGINS = [
+      'http://localhost:8080', // pueden ser locales
+      'https://movies.com' // como de producción.
+    ]
+    if (ACCEPTED_ORIGINS.includes(origin)) {
+      return callback(null, true)
+    }
+
+    if (!origin) {
+      return callback(null, true)
+    }
+
+    return callback(new Error('Not allowed by CORS'))
+  }
+}))
+
 app.use(express.json())
 
 app.disabled('x-powered-by') // deshabilita el header que genera express.
+
+const ACCEPTED_ORIGINS = [
+  'http://localhost:8080', // pueden ser locales
+  'https://movies.com' // como de producción.
+]
 
 app.get('/', (req, res) => {
   res.json({
@@ -15,6 +39,11 @@ app.get('/', (req, res) => {
 })
 
 app.get('/movies', (req, res) => {
+  const origin = req.header('origin')
+
+  if (ACCEPTED_ORIGINS.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', '*')
+  }
   const { genre } = req.query
 
   if (genre) {
@@ -83,6 +112,24 @@ app.patch('/movies/:id', (req, res) => {
   movieIndex[movieIndex] = updateMovie
 
   return res.json(updateMovie)
+})
+
+app.delete('/movies/:id', (req, res) => {
+  const { id } = req.params
+  const movieIndex = movies.findIndex(movie => movie.id === id)
+
+  if (movieIndex === -1) res.status(404).json({ message: 'Movie not found' })
+
+  movies.splice(movieIndex, 1)
+  return res.status(204).json({ message: 'Movie deleted' })
+})
+
+app.options('/movies/:id', (res, req) => {
+  const origin = req.header('origin')
+
+  if (ACCEPTED_ORIGINS.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', '*')
+  }
 })
 
 const PORT = process.env.PORT || 3000

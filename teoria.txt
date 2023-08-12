@@ -351,3 +351,95 @@ Esto puede funcionar o es cuando usamos las funciones puras por ejm un función 
                           mismo.
 
   /movies                   /movies/123                     /movies/123
+
+npx servor ./web este comando lo que nos hace es servir en una URL por ejm una pagina web estarica pequeña como en nuetsro caso para 
+
+
+!!! CORS !!!.- Es un mecanismo que reestringue en una página web para que un dominio sea de otro domino que quiere acceder a este recurso y ver si ese recurso lo puedes usar en un origen y es algo que hacen los naveagores. En navaegadores porque, porque siempre el navegador es el que hace las peticiones. por ejm nuestra api esta en localhost:3000 y nuestro navegador este en localhost:4000 aquí da CORS.
+Esto responde casi siempre con una falta de cabecera en nuestra api, esto se da porque no existe una cabecera que le podamos nosotros decir vale si puedes. 
+El error que comunmente da es "Error uso compartido de recursos entre dominios: MissingAllowOriginHeader"
+El cors de arregla siempre en el backend, ya sea api, ya sea en el proxy, o el enrutador en lo que sea que pueda añadir esta cabecera si no está esa cabecera no funcionará.
+
+Podemos inclcuso según cada endpoint dar acceso o no. ejm
+app.get('/movies', (req, res) => {
+  // con el * le decimos que todos los origenes son válidos
+  res.header('Access-Control-Allow-Origin', '*')
+  // podemos nosotros controlar el origen desde donde queremos que se pueda llamar a nuestra API.
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  const { genre } = req.query
+
+  if (genre) {
+    const filteredMovies = movies.filter(movie => movie.genre.some(g => g.toLowerCase() === genre.toLowerCase()))
+    return res.json(filteredMovies)
+  }
+
+  return res.json(movies)
+})
+
+Pero nosotros de antemano no podemos saber que origen abrián. Podemos crear una lista de origenes aceptados por ejm como en este ejm.
+
+const ACCEPTED_ORIGINS = [
+  'http://localhost:8080', // pueden ser locales
+  'https://movies.com' // como de producción.
+]
+
+app.get('/movies', (req, res) => {
+  const origin = req.headers('origin')
+
+  // este !origin podemos hacerlo cuando no tenemos la cabecera cuando son los mismos origenes.
+  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
+    res.header('Access-Control-Allow-Origin', '*')
+  }
+  const { genre } = req.query
+
+  if (genre) {
+    const filteredMovies = movies.filter(movie => movie.genre.some(g => g.toLowerCase() === genre.toLowerCase()))
+    return res.json(filteredMovies)
+  }
+
+  return res.json(movies)
+})
+
+Hay un caso más que debemos de tener en cuenta que es bastante importante, que el origin esta cabecera origin no nos envía la cabecera origin, hay casos donde no nos envia nuca el header de origin cuando la petición es del mismo origen osea  'http://localhost:8080' => 'http://localhost:8080' el mismo endpoint
+
+Como vismos podemos hacerlo para cualquier url que tengamos podemos controlar cada endpoint así, pero como vemos no funciona para todos.
+
+El CORS es más jodido con métodos completjos, en los metodos complejos existe una cosa llamada CORS, PRE-flight, esto cuando nosotros hacemos un PUT/PATCH/DELETE, requiere una petitición especial llamada options, es una petición previa, que lo que va a hacer es pregunatr antes de hacer PUT/PATCH/DELETE cuentame, entonxes este option es el que no tiene la cabecera.
+Debemos de agregar también una petición a options y pasarle esa cabecera y una extra donde le indicamos los métodos que puede permitir.
+
+metodos normales GET/HEAD/POST
+metodos complejos PUT/PATCH/DELETE
+
+app.options('/movies/:id', () => {
+  const origin = req.header('origin')
+
+  if (ACCEPTED_ORIGINS.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin)
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
+  }
+
+  res.send()
+})
+
+También existe un middleware que los podemos colocar en nuestro punto de entrada, que lo que hace es automatizar las cabeceras automatiza lo que hicimos nosotros en los ejm aunque este middleware coloca un * y no tiene mucho sentido colocarlo así. por ejm
+
+Instalación => pnpm add cors -E
+
+// aqui en este ejm vemos como podemos también usar el middleware de cors con origenes definidos.
+app.use(cors({
+  origin: (origin, callback) => {
+    const ACCEPTED_ORIGINS = [
+      'http://localhost:8080', // pueden ser locales
+      'https://movies.com' // como de producción.
+    ]
+    if (ACCEPTED_ORIGINS.includes(origin)) {
+      return callback(null, true)
+    }
+
+    if (!origin) {
+      return callback(null, true)
+    }
+
+    return callback(new Error('Not allowed by CORS'))
+  }
+}))
