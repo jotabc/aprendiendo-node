@@ -443,3 +443,43 @@ app.use(cors({
     return callback(new Error('Not allowed by CORS'))
   }
 }))
+
+
+!!! Deploy en fl0 pasos !!!
+  - Podemos hacerlo lo más fácil por medio de un repo de git, aparece al crearnos una cuenta.
+  - Nos aparecera todos los projects quetenemos en git y le damos a connect, y luego seguimos los pasos.
+  - Selecccionar la rama main o principal siempre, para que cuando se haga un commit a esa rama automaticamente de haga el deploy.
+  - Tambien nos permite a nosotros subir una DB de postgres pero es un solo proyecto en la versino gratis.
+  - Crear en nuestro proyecto node un scrip de start "start": "node index.js", por defecto es que los servicios de cloud usan para partir el proyecto.
+  - Otra cosa básica y muy importante es revisar que nuestro puerto siempre este con una variable de entorno porque el servicio que estamos usando de hosting el lo coloca por defecto un puerto através de las variables de entorno.
+
+  const PORT = process.env.PORT ?? 3000
+  app.listen(PORT, () => {
+    console.log('Server on port', PORT)
+  })
+
+  ! QUES ES npm ci !.- ci (clean install), es un comando parecido a npm install, este npm ci es un comando que lanza un npm install pero muchisimo más optimizado para que tarde lo minimo posible y esto es gracias al package.lock.
+
+  Con el sistema de modulos de node commom.js las extensiones no son obligatorias, porque node internamente tiene un internamente una cosa llamada resolve que lo que hace es resolver esas extensiones, el intenta el archivo con cada extension hasta que lo encuentra, osea sin importamos ./archivos/text.json, ./archivos/text.js etc hasta que encuentra.
+
+  En EMs no está permitido hacer esto import movies from './movies.json', no podemos importar json no hace prte de la especificación, lo que teemos que hacer es decir a node que importe esto como un json podemos arreglarlo de 3 formas:
+
+    - import movies from './movies.json' assert { type: 'json' }, esta sintaxis con assert era experimental ahora la sintaxis es así import movies from './movies.json' with { type: 'json' } pero esta aún no lo soporta pero ese será la importación del json más adelante.
+    .con el assert funciona pero se dañara despues cuando quiten esa sintaxis.
+
+    - Segunda forma es hacerlo mediante fs.
+    import fs from 'node:fs'
+    const movies = JSON.parse(fs.readFileSync('./movies.json', 'utf-8'))
+
+    - Tercera forma la más correcta en ESM, es crear un require en node, osea pordemos crear una función, el require no solo nos permite crear modulos si no tiene también información de nuestra app. Es la mejor manera porque el require de forma nativa es capaz de comerce los json además estos modulos internos ya están compilados por node y es más rápido.
+
+    import { createRequire } from 'node:module'
+
+    const require = createRequire(import.meta.url)
+    - import.meta.url => import palabra reservada y además tiene información de los modulos y el sistema de archivos de nuetsro proyexta, meta son los metadatos de nuestro proyecto, url lo que hace es hablar de donde está el propio archivo, entonces los require es como si los hicieramos desde la raíz.
+
+    // con esto le decimos de donde queremos que me traiga el archivo.
+    const movies = require('./movies.json')
+
+
+!!! ARQUITECTURA MVC !!!.- (Modelo Visita Controlador) 
