@@ -5,3 +5,5 @@
 ## Class 2 - Routing Native + Routing express + Middlewares
 
 ## Class 3 - Api Rest with Express
+
+## Clase 4 - Refactoring + Extraction routes + MVC Architecture

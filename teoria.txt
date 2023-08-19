@@ -218,9 +218,20 @@ Cuando nosotros creamos SPA, normalmente tenemos errores al cargar las rutas cua
 
   - OPTIONS.- Describe los recursos que se pueden hacer en ese path, muchas veces es el problema que tenemos con el CORS, es lo que hace el navegador para hacer una petición a un endpoint, le dice quiero que me indiques con esta url que quiero acceder cuales son los modos que tengo permitidos de comunicación contigo, el options es que le devuelve las cabeceras de CORS.
 
+  // esta es un forma de colocarle los cors a las rutas PUT, PATCH Y DELETE
+      moviesRouter.options('/:id', (res, req) => {
+      const origin = req.header('origin')
+
+      if (ACCEPTED_ORIGINS.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', '*')
+      }
+    })
+
+
 NOTA.- let y const funcionan es por ambito de bloque y los bloques se definen entre llaves, por eso es buena práctica aunque en casos sean opcionles las llaves debemos de usar siempre para que no haya colisión de constantes o let en funciones o en este caso de routing switch.
 
 !!! EXPRESS !!!.- Express es un framework, es el más usado, de node que nos permite crear apis, app, Nextjs usa express, webpack, tiene varios años funcionando en node. Un monton de framework lanzan cabeceras propias que indican que framework está siendo usado en express es X-Powered-By: Express aunque es recomendable quitarlo.
+  app.disabled('x-powered-by') // deshabilita el header que genera express.
 
   - instalacion:
     - pnpm add express -e
@@ -482,4 +493,59 @@ app.use(cors({
     const movies = require('./movies.json')
 
 
-!!! ARQUITECTURA MVC !!!.- (Modelo Visita Controlador) 
+!!! ARQUITECTURA MVC !!!.- (Modelo Visita Controlador).- Es un patrón de arquitectura utilizado muchisimos en app web y móviles, está arquitectura nos proporciona una estructura que nos obliga a separar nuestra app en 3 componentes interconectados escenciales y que separarn las preocupaciones de nuestra app. estos 3 componentes son : Modelo Vista Controlador, aunque existen muchas mejoras en cuanto a este patrón.
+
+  MODELO.- Representa la lógica del negocio, por ejm, la estructura de datos, las reglas que tiene el negocio de forma interna, es el que se encarga de acceder a la DB, o actualizar la información, o de ver si la integridad de los datos es correcta por ejm is creamos una id esta sea correcta. El modelo se puede conectar en un montón de sitios, lo importante es que el modelo al tener la lógica de negocio siempre sea igual siempre se comporte igual.
+  podrían ser clases para que tenga un contrato, y al usar ts podemos tipar perfectamemte nuestros modelos para que puedan ser intercambiables.
+  Las funciones del modelo por ejm getall tendrían que ser asincronos, por que sincornos estaría mal porque, realmente no deberiamos saber como trabajar el modelo por fuera, además siendo asíncrono o sincrono sea compatible la soluciones.
+
+    - mySql
+    - mongoDB
+    - local
+
+  VISTA.- La más importante para el usuario, representa la interfaz que el user va a poder utilizar, presentarle los datos, mostrar los datos, enviar las acciones desde la vista vamos a poder enviar las acciones que queremos hacer.
+    - React
+    - json
+
+  CONTROLADOR.- Es el que controla, es el que actúa como intermediario entre el modelo y la vista, es que esta respodiendo a las entradas del usuario, cada vez que el user usa nuestra página web, y antes de llegar al modelo el controlador es el que se esta encargando de responder, ver esas entradas, tratar esas entradas y ver si tiene que solicitar al modelo que haga operaciones, a que modelo le tiene que pedit y que es lo que tiene que pedir a cada modelo.
+
+  Estas 3 partes para que funcionen correctamente deben interactuarentre ellas:
+    - El controlador lo que hace es iniciar la vista con los datos (iniciar), recibe los datos del modelo.
+    - La vista, el usuario enviará acciones, actualizar, interaccionar etc.
+    - Al recibir estas acciones el controlador, recepta eso y según la acción le pide al modelo la nueva información y luego el controlador le reenderiza en la vista.
+
+    Nunca desde la vista tira al modelo.
+
+  ! VENTAJAS DE MVC !.-
+    - Separar la lógica de negocio sería la ventaja principal, es como nos conetcamos a la DB, importante separar tanto la interfaz y el controlador de la lógica de negocio
+
+    - Escalabilidad
+    - Testing
+    - Al no tener el modelo en medio, queremos cambiar de vista de React a Vue por ejm, no hemos tenido que tocar ni el controlador ni el modelo. Se puede hacer cambios en el modelo no afecta a la vista, se cambia la vista y no afecta el modelo etc.
+
+Porque MVC?
+  1) Express es una framework que está muy pensando para ser utilizado con MVC
+  2) Es un patrón de arquitectura aunque no lo engloba todo, por ejm, no te explica que dentro de la vista se tiene que hacer las cosas, es el más conocido y usado en muchos framework.
+
+ ! DIFF ENTRE PATRON DE DISEÑO Y PATRON DE ARQUITECTURA !.- 
+  - Un patrón de diseño sería un patrón repetible fácil de hcer para solucionar una cosa en concreto, un patron de diseño en una parte de nuestro código como por ejm: paton observer, factory, modulos como por ejm seguir el patron de diseño modulo que sería imports y exports.
+
+  - Un patrón de arquitectura vendría a ser algo más de toda la app, de como construimos toda nuestra app.
+  Tendríamos una estructura de carpetas 
+    - controllers
+    - modules
+    - views
+  
+  La clave es son como 3 cajas negras que cada una hace una cosa, que cada una de ella no sabe como lo hace, es la clave de un código limpio, lo más importante realmente esque las capas no tienen que saber la implementación por dentro.
+
+  NOTA.- importante siempr manejar en las rutas el try catch cuando trabajamos con async y await para que sea mucho más legible los motivos por los cauales peta nuestra app. Cuando hay un async await siempre debemos usar try catch para manejar los errores.
+
+  Donde van las validaciones.?.- Las validaciones van en todas las capz sea modelo, vista, controlador, y el nivel de la validación por ejm lavalidación del input del usuario se puede hacer en los 3 lugares:
+
+  - Las validaciones del modelo son validaciones de regla de negocio, coherencia de datos relacionaes sobre todo a la persistencia de los datos en DB, osea si en nuestra DB el campo es integer es imposible que metamos una cadena de texto, otra validación intentamos guardar un usuario, el controlador nos pasa un usuario con una id y esa id en la DB ya existe esa validación de verificar que ese usuario exista la debemos hacer en el modelo, garantizar la integridad y la coherencia de los datos es del modelo y son validaciones que se deben hacer en el modelo.
+
+  - En los controladores normalmente se centra de formato y coherencia que tengan los datos que hemos recibido, que se puedan procesar antes de enviarlo al modelo justamente el input del usuario es buena idea validarlo en el controlador antes de enviarlo al modelo, como por ejm que un email sea correcto, si un campo es requrido, que la cadena tenga un formato, que el número este dentro de un rango.
+
+  - La vista, tendría los errores que pueda ver el usuario, como notificaciones, mensajes de error, cosa que el usuario se da cuenta que el campo es requerido entonces el ya nos envia y se pueda procesar los datos
+
+  Las validaciones obligatorias son en los controladores y modelos, 

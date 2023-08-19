@@ -12,7 +12,7 @@ POST http://localhost:3000/movies
 Content-Type: application/json
 
 {
-    "title": "The Godfather",
+    "title": "The Godfather 3",
     "year": 1975,
     "director": "Francis Ford Coppola",
     "duration": 175,
@@ -28,5 +28,8 @@ PATCH  http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
 Content-Type: application/json
 
 {
-    "year": 1994
+  "year": 2000
 }
+
+### crear peliculas
+DELETE http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
