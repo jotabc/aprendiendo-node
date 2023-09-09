@@ -1,17 +1,20 @@
+import 'dotenv/config'
 import express, { json } from 'express'
 import { corsMiddleware } from './middlewares/corsMiddleware.js'
-import { moviesRouter } from './routes/moviesRouter.js'
+import { createMovieRouter } from './routes/moviesRouter.js'
 
-const app = express()
+export const createApp = ({ movieModel }) => {
+  const app = express()
 
-app.use(corsMiddleware())
-app.use(json())
-app.disabled('x-powered-by')
+  app.use(corsMiddleware())
+  app.use(json())
+  app.disabled('x-powered-by')
 
-app.use('/movies', moviesRouter)
+  app.use('/movies', createMovieRouter({ movieModel }))
 
-const PORT = process.env.PORT || 3000
+  const PORT = process.env.PORT || 3000
 
-app.listen(PORT, () => {
-  console.log('Server on port', PORT)
-})
+  app.listen(PORT, () => {
+    console.log('Server on port', PORT)
+  })
+}
