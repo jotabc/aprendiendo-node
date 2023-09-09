@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    mysql-movies:
+        image: mysql
+        container_name: movies-db
+        restart: always
+        ports:
+            - 3310:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: movies
+            MYSQL_DATABASE: movies
+        volumes:
+            - db_movies:/var/lib/mysql
+
+volumes:
+    db_movies:

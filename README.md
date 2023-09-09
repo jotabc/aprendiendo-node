@@ -7,3 +7,5 @@
 ## Class 3 - Api Rest with Express
 
 ## Clase 4 - Refactoring + Extraction routes + MVC Architecture
+
+## Clase 5 - MYSQL + CONNECTION MYSQL + CRUD COMPLETE
