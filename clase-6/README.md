@@ -27,7 +27,7 @@ ping('midu.dev', (err, info) => {
 })
 ```
 
-2 - Transforma la siguiente función para que funcione con promesas en lugar de callbacks:
+2 - [X] Transforma la siguiente función para que funcione con promesas en lugar de callbacks:
 
 ```javascript
 export function obtenerDatosPromise(callback) {
