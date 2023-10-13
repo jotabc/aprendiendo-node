@@ -100,3 +100,50 @@ export const procesarArchivoPromises = async () => {
 }
 
 await procesarArchivoPromises()
+
+// EJERCICIO 4
+export const leerArchivosSecuencial = async () => { // form asincrona pero secuencial, hasta que no termina de leer el primero no lee el segundo
+  console.time('leerArchivos')
+  const archivo1 = await fsp.readFile('archivo1.txt', 'utf8')
+  const archivo2 = await fsp.readFile('archivo2.txt', 'utf8')
+  const archivo3 = await fsp.readFile('archivo3.txt', 'utf8')
+
+  console.timeEnd('leerArchivos')
+  return `${archivo1} ${archivo2} ${archivo3}`
+}
+
+// form asincrona paralelo, aquí si ahorramos tiempo, esto hace las 3 de golpe conforme las hace me vas dando el control según el orden de como termina me da la respuesta. En cambio con el promise all tenemos un problema que si una promesa falla, todo falla y no devuelve nada.
+export const leerArchivosParalelo = async () => {
+  console.time('leerArchivos')
+
+  // const [archivo1, archivo2, archivo3] = await Promise.all([
+  //   fsp.readFile('archivo1.txt', 'utf8'),
+  //   fsp.readFile('archivo2.txt', 'utf8'),
+  //   fsp.readFile('archivo3.txt', 'utf8')
+  // ]).catch(err => {
+  //   console.error(err)
+  //   return []
+  // })
+
+  // con esto allSettled nos pemrite tener el control más granular de si falla o no.
+  const [archivo1, archivo2, archivo3] = await Promise.allSettled([
+    fsp.readFile('archivo1.txt', 'utf8'),
+    fsp.readFile('archivo2.txt', 'utf8'),
+    fsp.readFile('archivo3.txt', 'utf8')
+  ]).catch(err => {
+    console.error(err)
+    return []
+  })
+
+  const message = [archivo1.value, archivo2.value, archivo3.value]
+    .filter(i => typeof i !== 'undefined')
+    .join(' ')
+
+  console.timeEnd('leerArchivos')
+  console.timeEnd(message)
+  return message // con allSettled
+
+  // return `${archivo1} ${archivo2} ${archivo3}`
+}
+
+leerArchivosParalelo()

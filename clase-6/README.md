@@ -65,7 +65,7 @@ export function procesarArchivo() {
 }
 ```
 
-4 - ¿Cómo mejorarías el siguiente código y por qué? Arregla los tests si es necesario:
+4 - [X] ¿Cómo mejorarías el siguiente código y por qué? Arregla los tests si es necesario:
 
 ```javascript
 import fs from 'node:fs';
