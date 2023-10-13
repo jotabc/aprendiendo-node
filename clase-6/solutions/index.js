@@ -1,4 +1,6 @@
 import net from 'node:net'
+import fs from 'node:fs'
+import fsp from 'node:fs/promises'
 
 export const ping = (ip, callback) => {
   // punto de incio de ejecución del método ping.
@@ -45,3 +47,56 @@ obtenerDatosPromise()
 // } catch(e) {
 //   console.error(e)
 // }
+
+// EJERCICIO 3
+export const procesarArchivo = (callback) => {
+  const handleWriteFile = error => {
+    if (error) {
+      console.error('Error guardando archivo:', error.message)
+      callback(error)
+    }
+
+    console.log('Archivo procesado y guardado con éxito')
+    callback(null)
+  }
+
+  const handleReadFile = (error, contenido) => {
+    if (error) {
+      console.error('Error leyendo archivo:', error.message)
+      callback(error)
+    }
+
+    const textoProcesado = contenido.toUpperCase()
+    fs.writeFile('output.txt', textoProcesado, handleWriteFile)
+  }
+
+  fs.readFile('input.txt', 'utf8', handleReadFile)
+}
+
+export const procesarArchivoPromises = async () => {
+  let contenido = ''
+
+  // try {
+  //   contenido = await fsp.readFile('input.txt', 'utf8')
+  // } catch (error) {
+  //   console.error('Error leyendo archivo:', error.message)
+  //   throw error
+  // }
+
+  contenido = await fsp.readFile('input.txt', 'utf8')
+    .catch(e => {
+      console.error('Error leyendo archivo:', e.message)
+      return '' // con esto evitamos que se corte la ejecución de nuestra función.
+    })
+
+  const textoProcesado = contenido.toUpperCase()
+
+  try {
+    await fsp.writeFile('output.txt', textoProcesado)
+  } catch (error) {
+    console.error('Error guardando archivo:', error.message)
+    throw error
+  }
+}
+
+await procesarArchivoPromises()
