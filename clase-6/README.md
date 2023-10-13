@@ -94,7 +94,7 @@ await delay(3000)
 console.log('Hola mundo')
 ```
 
-6. [] Vamos a crear nuestra propia utilidad `dotenv` en el archivo `dotenv.js`.
+6. [X] Vamos a crear nuestra propia utilidad `dotenv` en el archivo `dotenv.js`.
 
 - La utilidad debe devolver un método `config` que lee el archivo `.env` y añade las variables de entorno que haya en el archivo al objeto `process.env`.
 
@@ -132,7 +132,7 @@ Cosas a tener en cuenta:
 - `process.env` es un objeto y, por lo tanto, es mutable. Esto significa que podemos añadir propiedades nuevas sin problemas.
 
 
-7 - Diseña una API REST utilizando Express que permite a los usuarios crear, leer, modificar, actualizar y eliminar elementos de una lista.
+7 - [X] Diseña una API REST utilizando Express que permite a los usuarios crear, leer, modificar, actualizar y eliminar elementos de una lista.
 
 La lista tendrá objetos que tienen la siguiente forma:
 
