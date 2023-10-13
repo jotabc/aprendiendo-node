@@ -1,7 +1,6 @@
 import net from 'node:net'
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
-import { resolve } from 'node:path'
 
 export const ping = (ip, callback) => {
   // punto de incio de ejecución del método ping.
