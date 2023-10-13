@@ -551,4 +551,5 @@ Porque MVC?
   Las validaciones obligatorias son en los controladores y modelos, 
 
 !!! INYECCIÓN DE DEPENDECIAS !!!.- Al final es pasarle por parámetro alguna cosa. Es un patrón de diseño para aumentar la eficiencia y la modularidad del código. La idea básica detrás de esto, es normalmento un objeto, un clase hasta una función reciben sus dependencias desde fuera se les inyecta, y el comportamiento cambia dependiendo de como se le pasa la infor, esto es muy bueno porque nos facilita el control, reutilización y probar el código, desacopla el código importante porque así ese objeto o clase funciona de diff maneras dependiendo de lo que le llegue por fuera, 2do es que a la hora de inyectar la dependencia también nos mejora el hecho de poder testear el código, 3er reutlización y 4to el control.
-          
+
+!!! CALLBACKS !!!.- los callbacks son funcoines que se ejecutan una vez haya ocurrido algo, nos pemrite cosas que sean asincronas, y podamos retomar el hilo de ejecución de nuestro programa.
