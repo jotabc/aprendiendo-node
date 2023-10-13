@@ -1,6 +1,7 @@
 import net from 'node:net'
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
+import { resolve } from 'node:path'
 
 export const ping = (ip, callback) => {
   // punto de incio de ejecución del método ping.
@@ -147,3 +148,32 @@ export const leerArchivosParalelo = async () => {
 }
 
 leerArchivosParalelo()
+
+// Ejercicio 5
+export const delay = async (time) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, time)
+  })
+}
+
+// limpiando el timeout
+// export const delay = async (time) => {
+//   let timeoutId
+//   const promise = new Promise(resolve, () => {
+//     timeoutId = setTimeout(resolve, time)
+//   })
+
+//   return {
+//     clearTimeout: () => clearInterval(timeoutId),
+//     promise
+//   }
+// }
+
+// delay(3000).then(() => console.log('Hola mundo'))
+// o..
+// await delay(3000)
+const { promise, clearTimeout } = delay(500)
+await promise() // <-- a lo mejor no se resuelve nunca
+clearTimeout()
+
+// Ejercicio 6

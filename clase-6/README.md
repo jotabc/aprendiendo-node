@@ -81,7 +81,7 @@ export function leerArchivos() {
 leerArchivos();
 ```
 
-5 - Escribe una funcion `delay` que retorne una promesa que se resuelva después de `n` milisegundos. Por ejemplo:
+5 - [X] Escribe una funcion `delay` que retorne una promesa que se resuelva después de `n` milisegundos. Por ejemplo:
 
 ```javascript
 export async function delay () {
