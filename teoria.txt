@@ -555,3 +555,34 @@ Porque MVC?
 !!! CALLBACKS !!!.- los callbacks son funcoines que se ejecutan una vez haya ocurrido algo, nos pemrite cosas que sean asincronas, y podamos retomar el hilo de ejecución de nuestro programa.
 
 !!! PROMESAS !!!.- Las promesas en js son objetos en js que tienen una clase constructura, podemos construir un promesa y apartir de ahí podemos envolver el código cosa que sea todo una promesa, entonces nosotros manejamos cuando se resuelve o cuando se rechaza.
+
+!!! WEB SOCKETS !!!.- Es un protoco de comunicaciòn que se basa en intercambio de mensajes entre un cliente y un servidor, usa TCP como protocolo de transporte, igual que http, la diff es que pueden intercambiar mensajes entre el cliente y el servidor en cualquier momento. Tenemos con websockets conexiòn persistente, al ser bidireccional, el usuario puede enviarle informaciòn al servidor o el servidor cuando quiera le quiere enviar al usuario esto lo que le hace diff de http porque http es unidireccional, incluso con websockets la conexiòn podemos cerrar nosotros como usuario o el servidor.
+Obviamente como mìnimo debemos de hacer una primera request, y el servidor sabrà si acepta o no.
+
+  ! DIFF entre Websockets y http !
+
+  Http.- El usuario hace una peticiòn y el servidor responde esa peticiòn es lo que es http. Hacemos peticiones y responde el server. Para un chat no es recomendable porque en este protocolo nosotros somoms los que hacemos las peticiones, para lograr hacer un chat debemos de usar una tècnica llamada polling, que es mas o mènos "cada x segundos ve y pregunta a ver si tengo mensajes nuevos", esto no es tiempo real. El problema de polling es la request porque es muy grande aveces entonces tendremos latencia en esto. Usa TCP como protocolo de transporte de datos
+
+    -  Statless, es lo que le pemrite que sea cacheable, por ejm entramos a una web y estamos piendo una imagen como es Stateless la req siempre tendrìa que devolver la misma imagen.
+
+    - Es cacheable.
+    - Es unidireccional.
+    - No es Event driven.
+    
+    Casos de uso:
+    - Recursos (html, js, img)
+    - REST API
+
+  Websockets.- 
+    - Stateful
+    - No Cacheable
+    - Es bidireccional
+
+    Casos de uso:
+    - Realtime, informaciòn de ida y venida, poca latencia.
+    - Basado en eventos (Event Driven).
+
+!Como crear el websockets? Tenemos ws que es el màs descargado, y con el que podemos llevar a un nivel màs
+  complejo, pero usaremos socket.io mirar archivo clase7/server/index.js
+  
+  - Instalamos pnpm add socket.io
