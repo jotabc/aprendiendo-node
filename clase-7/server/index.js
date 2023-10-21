@@ -18,6 +18,11 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('a user has disconnect')
   })
+
+  // aqui estamos conectando con el socker del cliente, este chat messag, es el mismo nombre que le colocamos en el cliente socket.emit('chat message', input.value)
+  socket.on('chat message', (message) => {
+    io.emit('chat message', message)
+  })
 })
 
 app.use(logger('dev'))
