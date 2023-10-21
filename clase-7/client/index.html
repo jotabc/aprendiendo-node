@@ -9,7 +9,20 @@
     import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 
     const socket = io()
+
+    const form = document.getElementById('form')
+    const input = document.getElementById('input')
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      if (input.value) {
+        socket.emit('chat message', input.value)
+        input.value = ''
+      }
+    })
   </script>
+
   <style>
     *,
     *::before,
@@ -39,12 +52,42 @@
       height: 100%;
       position: relative;
     }
+
+    #form {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      height: 48px;
+      padding: 4px;
+    }
+
+    #input {
+      border-radius: 9999px;
+      border: 1px solid #eee;
+      flex: 1;
+      margin: 4px;
+      padding: 0 8px;
+    }
+
+    #input:focus {
+      outline: 0;
+    }
+
+    #form>button {
+      background: #09f;
+      color: #fff;
+      border: 0;
+      margin: 4px;
+      border-radius: 4px;
+    }
   </style>
 </head>
 
 <body>
   <section id="chat">
-    <form action="">
+    <form id="form" action="POST">
       <input type="text" name="message" id="input" placeholder="Type a message" autocomplete="off">
       <button type="submit">Enviar</button>
     </form>
